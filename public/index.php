@@ -1,5 +1,10 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
@@ -22,12 +27,14 @@ $reqMethod = $_SERVER["REQUEST_METHOD"];
 
 
 $routes = [
+    'auth' => dirname(__DIR__) . '/app/routes/authRoutes.php',
     'products' => dirname(__DIR__) . '/app/routes/productRoutes.php',
     'upload' => dirname(__DIR__) . '/app/routes/uploadRoutes.php',
 ];
 
 if (strpos($reqURL, '/api/uploads') === 0) {
-    $filePath = dirname(__DIR__) . $reqURL;
+    $filename = basename($reqURL);
+    $filePath = dirname(__DIR__) . '/uploads/' . $filename;
     if (file_exists($filePath)) {
         header('Content-Type:' . mime_content_type($filePath));
         readfile($filePath);
@@ -39,12 +46,33 @@ if (strpos($reqURL, '/api/uploads') === 0) {
     }
 }
 
-if (isset($segments[0]) && $segments[0] === "api" && isset($segments[1])) {
-    $resource = $segments[1];
-    $id = $segments[2] ?? null;
-    if (array_key_exists($resource, $routes)) {
-        require_once $routes[$resource];
-        exit;
+if (isset($segments[0]) && $segments[0] === "api") {
+
+    if (isset($segments[1]) && $segments[1] === "v1" && isset($segments[2])) {
+        $resource = $segments[2];
+        if ($resource === "auth" && isset($routes[$resource])) {
+            require_once $routes[$resource];
+            exit;
+        }
+    }
+
+    if (isset($segments[1])) {
+        $resource = $segments[1];
+        $id = $segments[2] ?? null;
+        if (array_key_exists($resource, $routes)) {
+
+            if ($resource === "products") {
+                require_once dirname(__DIR__) . '/app/middlewares/authMiddleware.php';
+                if (!protectRoute()) {
+                    http_response_code(401);
+                            echo json_encode(["error" => "Unauthorized"]);
+                    exit;
+                }
+            }
+
+            require_once $routes[$resource];
+            exit;
+        }
     }
 }
 

@@ -56,22 +56,22 @@ class ProductController
         }
     }
 
-    public static function createProduct($data, $imagePath)
+    public static function createProduct($data)
     {
-        if (empty($data['name']) || empty($data['description']) || empty($data['price']) || empty($data['stock']) || empty($imagePath)) {
-            http_response_code(400);
-            echo json_encode(["status" => 400, "success" => false, "message" => "All fields are required"]);
-            return;
-        }
 
-        if (!is_numeric($data['price']) || !is_numeric($data['stock'])) {
+        if (
+            !isset($data['name']) || trim($data['name']) === '' ||
+            !isset($data['description']) || trim($data['description']) === '' ||
+            !isset($data['price']) || !is_numeric($data['price']) ||
+            !isset($data['stock']) || !is_numeric($data['stock']) ||
+            !isset($data['image']) || trim($data['image']) === ''
+        ) {
             http_response_code(400);
-            echo json_encode(["status" => 400, "success" => false, "message" => "Price and Stock must be numeric"]);
+            echo json_encode(["status" => 400, "success" => false, "message" => "All fields text are required"]);
             return;
         }
 
         try {
-            $data['image'] = $imagePath;
             $newProduct = ProductService::createProduct($data);
             http_response_code(201);
             echo json_encode(["status" => 201, "success" => true, "message" => "Product created successfully", "data" => $newProduct]);

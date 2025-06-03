@@ -1,9 +1,10 @@
 <?php
-require_once dirname(__DIR__) . '/middlewares/upload.php';
+require_once dirname(__DIR__) . '/middlewares/uploadMiddleware.php';
 require_once dirname(__DIR__) . '/controllers/uploadController.php';
 
 
 switch ($reqMethod) {
+
 
     case 'POST':
     case 'PATCH':

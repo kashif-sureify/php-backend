@@ -1,7 +1,7 @@
 <?php
 
 require_once dirname(__DIR__) . '/controllers/productController.php';
-require_once dirname(__DIR__) . '/middlewares/upload.php';
+require_once dirname(__DIR__) . '/middlewares/uploadMiddleware.php';
 
 
 
@@ -11,9 +11,8 @@ switch ($reqMethod) {
         break;
 
     case 'POST':
-        $data = $_POST;
-        $imagePath = handleUpload('image');
-        ProductController::createProduct($data, $imagePath);
+        $data = json_decode(file_get_contents("php://input"), true);
+        ProductController::createProduct($data);
         break;
     case 'PATCH':
         $data = json_decode(file_get_contents("php://input"), true);

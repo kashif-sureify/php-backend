@@ -13,7 +13,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY ./docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
 
-WORKDIR /var/www/html
+WORKDIR /var/www/html/
 COPY . .
 
 EXPOSE 80

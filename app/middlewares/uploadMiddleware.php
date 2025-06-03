@@ -3,7 +3,9 @@ function handleUpload($fieldName)
 {
     $uploadDir = '/var/www/html/uploads';
 
+
     if (!isset($_FILES[$fieldName]) || $_FILES[$fieldName]['error'] !== UPLOAD_ERR_OK) {
+        error_log("Upload failed or file not received. _FILES: " . print_r($_FILES, true));
         return null;
     }
 
@@ -22,10 +24,14 @@ function handleUpload($fieldName)
     $targetPath = $uploadDir . '/' . $fileName;
 
     if (move_uploaded_file($_FILES[$fieldName]['tmp_name'], $targetPath)) {
-        return '/uploads/' . $fileName; // Public path
+        return $fileName;
     } else {
         http_response_code(500);
-        echo json_encode(["message" => "Failed to upload file"]);
+        echo json_encode([
+            "message" => "Failed to upload file",
+            "error" => $_FILES[$fieldName]['error'],
+            "targetPath" => $targetPath
+        ]);
         exit;
     }
 }
