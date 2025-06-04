@@ -1,8 +1,10 @@
 <?php
 
-require_once dirname(__DIR__) . '/config/db.php';
+namespace App\services;
 
 use Firebase\JWT\JWT;
+use App\config\Database;
+
 
 class AuthService
 {
@@ -18,7 +20,7 @@ class AuthService
         ]);
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->execute([':email' => $email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if (!$user) return null;
         $token = JWT::encode(['id' => $user['id'], 'email' => $user['email'], 'exp' => time() + 3600], $_ENV['JWT_SECRET'], 'HS256');
@@ -30,7 +32,7 @@ class AuthService
         $pdo = Database::getConnection();
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->execute([':email' => $email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if (!$user || !password_verify($password, $user['password'])) {
             return null;

@@ -1,7 +1,9 @@
 <?php
 
-require_once dirname(__DIR__) . '/controllers/authController.php';
-require_once dirname(__DIR__) . '/middlewares/authMiddleware.php';
+namespace App\routes;
+
+use App\controllers\AuthController;
+use App\middlewares\AuthMiddleware;
 
 switch ($reqMethod) {
     case "POST":
@@ -19,7 +21,7 @@ switch ($reqMethod) {
         break;
     case "GET":
         if ($reqURL === "/api/v1/auth/authCheck") {
-            if (!protectRoute()) return;
+            if (!AuthMiddleware::protectRoute()) return;
             AuthController::authCheck();
         } else {
             http_response_code(404);

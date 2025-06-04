@@ -1,5 +1,8 @@
 <?php
 
+namespace App\controllers;
+
+
 class UploadController
 {
     public static function imageUpload($imagePath)
@@ -13,7 +16,7 @@ class UploadController
             $filename = basename($imagePath);
             http_response_code(200);
             echo json_encode(["filename" => $filename]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             http_response_code(500);
             echo json_encode([
                 "status" => 500,

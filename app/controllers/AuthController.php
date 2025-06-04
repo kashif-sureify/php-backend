@@ -1,6 +1,8 @@
 <?php
 
-require_once dirname(__DIR__) . '/services/authService.php';
+namespace App\controllers;
+
+use App\services\AuthService;
 
 
 class AuthController
@@ -31,7 +33,7 @@ class AuthController
 
             http_response_code(201);
             echo json_encode(["status" => 201, "success" => true, "user" => $result['user']]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             http_response_code(500);
             echo json_encode(["status" => 500, "success" => false, "message" => "Internal Server Error", "error" => $e->getMessage()]);
         }
@@ -62,7 +64,7 @@ class AuthController
 
             http_response_code(200);
             echo json_encode(["status" => 200, "success" => true, "user" => $result['user']]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             http_response_code(500);
             echo json_encode(["status" => 500, "success" => false, "message" => "Internal Server Error"]);
         }
@@ -85,7 +87,7 @@ class AuthController
 
             http_response_code(200);
             echo json_encode(["status" => 200, "success" => true, "user" => $user]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             http_response_code(500);
             echo json_encode(["status" => 500, "success" => false, "message" => "Internal Server Error"]);
         }

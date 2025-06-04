@@ -1,6 +1,9 @@
 <?php
 
-require_once dirname(__DIR__) . '/services/productService.php';
+namespace App\controllers;
+
+use App\services\ProductService;
+
 
 class ProductController
 {
@@ -26,7 +29,7 @@ class ProductController
                 "data" => $products
 
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             http_response_code(500);
             echo json_encode([
                 "status" => 500,
@@ -46,7 +49,7 @@ class ProductController
                 http_response_code(404);
                 echo json_encode(["status" => 404, "success" => false, "message" => "Product not found"]);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             http_response_code(500);
             echo json_encode([
                 "status" => 500,
@@ -75,7 +78,7 @@ class ProductController
             $newProduct = ProductService::createProduct($data);
             http_response_code(201);
             echo json_encode(["status" => 201, "success" => true, "message" => "Product created successfully", "data" => $newProduct]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log("Create product error " . $e->getMessage());
             http_response_code(500);
             echo json_encode([
@@ -102,7 +105,7 @@ class ProductController
 
             http_response_code(200);
             echo json_encode(["status" => 200, "success" => true, "data" => $updateProduct]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log("update product error " . $e->getMessage());
             http_response_code(500);
             echo json_encode([
@@ -124,7 +127,7 @@ class ProductController
             }
             http_response_code(200);
             echo json_encode(["status" => 200, "success" => true, "message" => "Product deleted successfully"]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log("delete product error " . $e->getMessage());
             http_response_code(500);
             echo json_encode([

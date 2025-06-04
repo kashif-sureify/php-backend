@@ -4,22 +4,24 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
+use App\config\ProductDB;
+use App\config\UserDB;
+use App\middlewares\AuthMiddleware;
+use App\utils\Cors;
+
+
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
+ProductDB::initProductTable();
+UserDB::initUserTable();
 
-require_once dirname(__DIR__) . '/app/config/productDB.php';
-require_once dirname(__DIR__) . '/app/config/userDB.php';
+Cors::handle();
 
-
-require_once dirname(__DIR__) . '/app/utils/cors.php';
-
-// Parse request URL and method
 $rawURL = $_SERVER["REQUEST_URI"];
 $reqURL = parse_url($rawURL, PHP_URL_PATH);
 $segments = explode("/", trim($reqURL, "/"));
@@ -27,9 +29,9 @@ $reqMethod = $_SERVER["REQUEST_METHOD"];
 
 
 $routes = [
-    'auth' => dirname(__DIR__) . '/app/routes/authRoutes.php',
-    'products' => dirname(__DIR__) . '/app/routes/productRoutes.php',
-    'upload' => dirname(__DIR__) . '/app/routes/uploadRoutes.php',
+    'auth' => dirname(__DIR__) . '/app/routes/AuthRoutes.php',
+    'products' => dirname(__DIR__) . '/app/routes/ProductRoutes.php',
+    'upload' => dirname(__DIR__) . '/app/routes/UploadRoutes.php',
 ];
 
 if (strpos($reqURL, '/api/uploads') === 0) {
@@ -62,10 +64,9 @@ if (isset($segments[0]) && $segments[0] === "api") {
         if (array_key_exists($resource, $routes)) {
 
             if ($resource === "products") {
-                require_once dirname(__DIR__) . '/app/middlewares/authMiddleware.php';
-                if (!protectRoute()) {
+                if (!AuthMiddleware::protectRoute()) {
                     http_response_code(401);
-                            echo json_encode(["error" => "Unauthorized"]);
+                    echo json_encode(["error" => "Unauthorized"]);
                     exit;
                 }
             }

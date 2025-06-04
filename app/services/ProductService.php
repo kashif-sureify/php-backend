@@ -1,6 +1,8 @@
 <?php
 
-require_once dirname(__DIR__) . '/config/db.php';
+namespace App\services;
+
+use App\config\Database;
 
 class ProductService
 {
@@ -9,8 +11,8 @@ class ProductService
         $pdo = Database::getConnection();
         $sql = "SELECT * FROM products ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', (int)$limit, \PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, \PDO::PARAM_INT);
         $stmt->execute();
         $products = $stmt->fetchAll();
         return $products;
@@ -30,7 +32,7 @@ class ProductService
         $pdo = Database::getConnection();
         $sql = "SELECT * FROM products WHERE id=:id LIMIT 1";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', (int)$id, \PDO::PARAM_INT);
         $stmt->execute();
         $product = $stmt->fetch();
         return $product ?: null;
@@ -51,7 +53,7 @@ class ProductService
             ':image' => $data['image'],
         ]);
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     public static function updateProduct(int $id, array $data): ?array
@@ -73,15 +75,15 @@ class ProductService
         $stmt = $pdo->prepare($sql);
 
 
-        $stmt->bindValue(':name', $data['name'] ?? null, PDO::PARAM_STR);
-        $stmt->bindValue(':description', $data['description'] ?? null, PDO::PARAM_STR);
-        $stmt->bindValue(':price', $data['price'] ?? null, PDO::PARAM_STR);
-        $stmt->bindValue(':stock', $data['stock'] ?? null, PDO::PARAM_INT);
-        $stmt->bindValue(':image', $data['image'] ?? null, PDO::PARAM_STR);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':name', $data['name'] ?? null, \PDO::PARAM_STR);
+        $stmt->bindValue(':description', $data['description'] ?? null, \PDO::PARAM_STR);
+        $stmt->bindValue(':price', $data['price'] ?? null, \PDO::PARAM_STR);
+        $stmt->bindValue(':stock', $data['stock'] ?? null, \PDO::PARAM_INT);
+        $stmt->bindValue(':image', $data['image'] ?? null, \PDO::PARAM_STR);
+        $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
 
         $stmt->execute();
-        $updated = $stmt->fetch(PDO::FETCH_ASSOC);
+        $updated = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         return $updated ?: null;
     }
@@ -93,7 +95,7 @@ class ProductService
         $pdo = Database::getConnection();
         $sql = "DELETE FROM products WHERE id=:id";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', (int)$id, \PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->rowCount() > 0;
     }

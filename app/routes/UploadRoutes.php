@@ -1,6 +1,9 @@
 <?php
-require_once dirname(__DIR__) . '/middlewares/uploadMiddleware.php';
-require_once dirname(__DIR__) . '/controllers/uploadController.php';
+
+namespace App\routes;
+
+use App\controllers\UploadController;
+use App\middlewares\UploadMiddleware;
 
 
 switch ($reqMethod) {
@@ -8,7 +11,7 @@ switch ($reqMethod) {
 
     case 'POST':
     case 'PATCH':
-        $imagePath = handleUpload('image');
+        $imagePath = UploadMiddleware::handleUpload('image');
         UploadController::imageUpload($imagePath);
         break;
     default:
