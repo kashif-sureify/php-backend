@@ -9,7 +9,7 @@ class AuthController
 {
     public static function signup($data)
     {
-        if (empty($data['username']) || empty($data['email']) || empty($data['password'])) {
+        if (!isset($data['username']) || trim($data['username']) === '' || !isset($data['email']) || trim($data['email']) === '' || !isset($data['password']) || trim($data['password']) === '') {
             http_response_code(400);
             echo json_encode(["status" => 400, "success" => false, "message" => "All field required"]);
             return;
@@ -40,7 +40,7 @@ class AuthController
     }
     public static function login($data)
     {
-        if (empty($data['email']) || empty($data['password'])) {
+        if (!isset($data['email']) || trim($data['email']) === '' || !isset($data['password']) || trim($data['password']) === '') {
             http_response_code(400);
             echo json_encode(["status" => 400, "success" => false, "message" => "All field required"]);
             return;
