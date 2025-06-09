@@ -4,32 +4,44 @@ namespace App\routes;
 
 use App\controllers\AuthController;
 use App\middlewares\AuthMiddleware;
+use App\utils\JsonResponse;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-switch ($reqMethod) {
-    case "POST":
-        $data = json_decode(file_get_contents('php://input'), true);
-        if ($reqURL === "/api/v1/auth/signup") {
-            AuthController::signup($data);
-        } else if ($reqURL === "/api/v1/auth/login") {
-            AuthController::login($data);
-        } else if ($reqURL === "/api/v1/auth/logout") {
-            AuthController::logout();
-        } else {
-            http_response_code(404);
-            echo json_encode(["message" => "Route not found"]);
+class AuthRoutes
+{
+    public static function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        $path = $request->getUri()->getPath();
+        $method = $request->getMethod();
+
+        $data = json_decode((string) $request->getBody(), true) ?? [];
+        if ($method === "GET" && $path == "/api/v1/auth/authCheck") {
+            $middleware = new AuthMiddleware();
+
+            $handler = new class implements RequestHandlerInterface {
+
+                public function handle(ServerRequestInterface $request): ResponseInterface
+                {
+                    $user = $request->getAttribute('user');
+                    return AuthController::authCheck($user);
+                }
+            };
+
+            return $middleware->process($request, $handler);
         }
-        break;
-    case "GET":
-        if ($reqURL === "/api/v1/auth/authCheck") {
-            if (!AuthMiddleware::protectRoute()) return;
-            AuthController::authCheck();
-        } else {
-            http_response_code(404);
-            echo json_encode(["message" => "Route not found"]);
+
+        if ($method === "POST") {
+            return match ($path) {
+                '/api/v1/auth/signup' => AuthController::signup($data),
+                '/api/v1/auth/login' => AuthController::login($data),
+                '/api/v1/auth/logout' => AuthController::logout(),
+
+                default => JsonResponse::notFound(["message" => "Route not found"]),
+            };
         }
-        break;
-    default:
-        http_response_code(405);
-        echo json_encode(["message" => "Method Not Allowed"]);
-        break;
+
+        return JsonResponse::methodNotAllowed();
+    }
 }

@@ -2,42 +2,67 @@
 
 namespace App\middlewares;
 
-class UploadMiddleware
+use App\utils\JsonResponse;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Exception;
+
+class UploadMiddleware implements MiddlewareInterface
 {
-    public static function handleUpload($fieldName)
+    private string $fieldName;
+    private bool $isRequired;
+    private string $uploadDir = '/var/www/html/uploads';
+
+    public function __construct(string $fieldName, bool $isRequired = true)
     {
-        $uploadDir = '/var/www/html/uploads';
+        $this->fieldName = $fieldName;
+        $this->isRequired = $isRequired;
+    }
 
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        $uploadedFiles = $request->getUploadedFiles();
 
-        if (!isset($_FILES[$fieldName]) || $_FILES[$fieldName]['error'] !== UPLOAD_ERR_OK) {
-            error_log("Upload failed or file not received. _FILES: " . print_r($_FILES, true));
-            return null;
+        if (!isset($uploadedFiles[$this->fieldName])) {
+            if ($this->isRequired) {
+                return JsonResponse::badRequest(["message" => "File '{$this->fieldName}' not uploaded"]);
+            }
+            return $handler->handle($request);
         }
 
-        if ($_FILES[$fieldName]['size'] > 5 * 1024 * 1024) {
-            http_response_code(400);
-            echo json_encode(["message" => "File too large. Max 5MB."]);
-            exit;
+        $uploadedFile = $uploadedFiles[$this->fieldName];
+
+        if ($uploadedFile->getError() === UPLOAD_ERR_NO_FILE) {
+            if ($this->isRequired) {
+                return JsonResponse::badRequest(["message" => "No file uploaded"]);
+            }
+            return $handler->handle($request);
         }
 
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0775, true);
+        if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
+            return JsonResponse::badRequest(["message" => "Upload error code: {$uploadedFile->getError()}"]);
         }
 
-        $originalName = basename($_FILES[$fieldName]['name']);
+        if ($uploadedFile->getSize() > 5 * 1024 * 1024) {
+            return JsonResponse::badRequest(["message" => "File too large. Max 5MB."]);
+        }
+
+        if (!file_exists($this->uploadDir)) {
+            mkdir($this->uploadDir, 0775, true);
+        }
+
+        $originalName = pathinfo($uploadedFile->getClientFilename(), PATHINFO_BASENAME);
         $fileName = time() . '-' . $originalName;
-        $targetPath = $uploadDir . '/' . $fileName;
+        $targetPath = $this->uploadDir . DIRECTORY_SEPARATOR . $fileName;
 
-        if (move_uploaded_file($_FILES[$fieldName]['tmp_name'], $targetPath)) {
-            return $fileName;
-        } else {
-            http_response_code(500);
-            echo json_encode([
-                "message" => "Failed to upload file",
-                "error" => $_FILES[$fieldName]['error'],
-                "targetPath" => $targetPath
-            ]);
-            exit;
+        try {
+            $uploadedFile->moveTo($targetPath);
+            $request = $request->withAttribute('uploadedFileName', $fileName);
+            return $handler->handle($request);
+        } catch (Exception $e) {
+            return JsonResponse::unauthorized(["message" => "Failed to upload file"]);
         }
     }
 }

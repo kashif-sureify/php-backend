@@ -2,27 +2,22 @@
 
 namespace App\controllers;
 
+use App\utils\JsonResponse;
+use Psr\Http\Message\ResponseInterface;
+use Exception;
 
 class UploadController
 {
-    public static function imageUpload($imagePath)
+    public static function imageUpload(string $imagePath): ResponseInterface
     {
         try {
             if (!$imagePath) {
-                http_response_code(400);
-                echo json_encode(["message" => "No file uploded"]);
-                return;
+                return JsonResponse::badRequest(["message" => "No file uploded"]);
             }
             $filename = basename($imagePath);
-            http_response_code(200);
-            echo json_encode(["filename" => $filename]);
-        } catch (\Exception $e) {
-            http_response_code(500);
-            echo json_encode([
-                "status" => 500,
-                "success" => false,
-                "message" => "Internal Server Error"
-            ]);
+            return JsonResponse::okResponse(["filename" => $filename]);
+        } catch (Exception $e) {
+            return JsonResponse::internalServerError(["error" => $e->getMessage()]);
         }
     }
 }

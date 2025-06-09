@@ -3,93 +3,64 @@
 namespace App\controllers;
 
 use App\services\AuthService;
+use App\utils\Cookie;
+use App\utils\JsonResponse;
+use Psr\Http\Message\ResponseInterface;
+use Exception;
 
 
 class AuthController
 {
-    public static function signup($data)
+    public static function signup(array $data): ResponseInterface
     {
         if (!isset($data['username']) || trim($data['username']) === '' || !isset($data['email']) || trim($data['email']) === '' || !isset($data['password']) || trim($data['password']) === '') {
-            http_response_code(400);
-            echo json_encode(["status" => 400, "success" => false, "message" => "All field required"]);
-            return;
+            return JsonResponse::badRequest();
         }
 
         try {
             $result = AuthService::signup($data['username'], $data['email'], $data['password']);
             if (!$result) {
-                http_response_code(401);
-                echo json_encode(["status" => 401, "success" => false, "message" => "Signup failed"]);
-                return;
+                return JsonResponse::unauthorized(["message" => "Signup failed"]);
             }
 
-            setcookie('token', $result['token'], [
-                'expires' => time() + 3600,
-                'httponly' => true,
-                'samesite' => 'Lax',
-                'secure' => $_ENV['PHP_ENV'] === 'production',
-                'path' => '/'
-            ]);
-
-            http_response_code(201);
-            echo json_encode(["status" => 201, "success" => true, "user" => $result['user']]);
-        } catch (\Exception $e) {
-            http_response_code(500);
-            echo json_encode(["status" => 500, "success" => false, "message" => "Internal Server Error", "error" => $e->getMessage()]);
+            $response = JsonResponse::createdResponse(["user" => $result['user']]);
+            return $response->withAddedHeader('Set-Cookie', Cookie::generateCookie($result['token'], 3600));
+        } catch (Exception $e) {
+            return JsonResponse::internalServerError(["error" => $e->getMessage()]);
         }
     }
-    public static function login($data)
+    public static function login(array $data): ResponseInterface
     {
         if (!isset($data['email']) || trim($data['email']) === '' || !isset($data['password']) || trim($data['password']) === '') {
-            http_response_code(400);
-            echo json_encode(["status" => 400, "success" => false, "message" => "All field required"]);
-            return;
+            return JsonResponse::badRequest();
         }
 
         try {
             $result = AuthService::login($data['email'], $data['password']);
             if (!$result) {
-                http_response_code(401);
-                echo json_encode(["status" => 401, "success" => false, "message" => "Invalid credentials"]);
-                return;
+                return JsonResponse::unauthorized(["message" => "Invalid credentials"]);
             }
 
-            setcookie('token', $result['token'], [
-                'expires' => time() + 3600,
-                'httponly' => true,
-                'samesite' => 'Lax',
-                'secure' => $_ENV['PHP_ENV'] === 'production',
-                'path' => '/'
-            ]);
-
-            http_response_code(200);
-            echo json_encode(["status" => 200, "success" => true, "user" => $result['user']]);
-        } catch (\Exception $e) {
-            http_response_code(500);
-            echo json_encode(["status" => 500, "success" => false, "message" => "Internal Server Error"]);
+            $response = JsonResponse::okResponse(["user" => $result['user']]);
+            return $response->withAddedHeader('Set-Cookie', Cookie::generateCookie($result['token'], 3600));
+        } catch (Exception $e) {
+            return JsonResponse::internalServerError(["error" => $e->getMessage()]);
         }
     }
-    public static function logout()
+    public static function logout(): ResponseInterface
     {
-        setcookie('token', '', time() - 3600, '/');
-        http_response_code(200);
-        echo json_encode(["status" => 200, "success" => true, "message" => "Logout successfully!"]);
+        $response = JsonResponse::okResponse(["message" => "Logout successfully!"]);
+        return $response->withAddedHeader('Set-Cookie', Cookie::generateCookie('', -1));
     }
-    public static function authCheck()
+    public static function authCheck(array $user): ResponseInterface
     {
-        global $user;
         try {
             if (!$user) {
-                http_response_code(401);
-                echo json_encode(["status" => 401, "success" => false, "message" => "Unauthorized"]);
-                return;
+                return JsonResponse::unauthorized(["message" => "Unauthorized"]);
             }
-
-            http_response_code(200);
-            echo json_encode(["status" => 200, "success" => true, "user" => $user]);
-        } catch (\Exception $e) {
-            http_response_code(500);
-            echo json_encode(["status" => 500, "success" => false, "message" => "Internal Server Error"]);
+            return JsonResponse::okResponse(["user" => $user]);
+        } catch (Exception $e) {
+            return JsonResponse::internalServerError(["error" => $e->getMessage()]);
         }
     }
 }

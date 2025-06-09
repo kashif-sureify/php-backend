@@ -3,11 +3,13 @@
 namespace App\controllers;
 
 use App\services\ProductService;
-
+use App\utils\JsonResponse;
+use Psr\Http\Message\ResponseInterface;
+use Exception;
 
 class ProductController
 {
-    public static function getProducts()
+    public static function getProducts(): ResponseInterface
     {
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 6;
@@ -18,48 +20,32 @@ class ProductController
             $total = ProductService::getTotalProducts();
             $totalPages = ceil($total / $limit);
 
-            http_response_code(200);
-            echo json_encode([
-                "status" => 200,
-                "success" => true,
+            return JsonResponse::okResponse([
                 "page" => $page,
                 "limit" => $limit,
                 "totalProducts" => $total,
                 "totalPages" => $totalPages,
                 "data" => $products
-
             ]);
-        } catch (\Exception $e) {
-            http_response_code(500);
-            echo json_encode([
-                "status" => 500,
-                "success" => false,
-                "message" => "Internal Server Error"
-            ]);
+        } catch (Exception $e) {
+            return JsonResponse::internalServerError(["error" => $e->getMessage()]);
         }
     }
 
-    public static function getProduct($id)
+    public static function getProduct(int $id): ResponseInterface
     {
         try {
-            $product = ProductService::getProductById((int)$id);
-            if ($product) {
-                echo json_encode(["status" => 200, "success" => true, "data" => $product]);
-            } else {
-                http_response_code(404);
-                echo json_encode(["status" => 404, "success" => false, "message" => "Product not found"]);
+            $product = ProductService::getProductById($id);
+            if (!$product) {
+                return JsonResponse::notFound(["message" => "Product not found"]);
             }
-        } catch (\Exception $e) {
-            http_response_code(500);
-            echo json_encode([
-                "status" => 500,
-                "success" => false,
-                "message" => "Internal Server Error"
-            ]);
+            return JsonResponse::okResponse(["data" => $product]);
+        } catch (Exception $e) {
+            return JsonResponse::internalServerError(["error" => $e->getMessage()]);
         }
     }
 
-    public static function createProduct($data)
+    public static function createProduct(array $data): ResponseInterface
     {
 
         if (
@@ -69,72 +55,49 @@ class ProductController
             !isset($data['stock']) || !is_numeric($data['stock']) ||
             !isset($data['image']) || trim($data['image']) === ''
         ) {
-            http_response_code(400);
-            echo json_encode(["status" => 400, "success" => false, "message" => "All fields text are required"]);
-            return;
+            return JsonResponse::badRequest();
         }
 
         try {
             $newProduct = ProductService::createProduct($data);
-            http_response_code(201);
-            echo json_encode(["status" => 201, "success" => true, "message" => "Product created successfully", "data" => $newProduct]);
-        } catch (\Exception $e) {
-            error_log("Create product error " . $e->getMessage());
-            http_response_code(500);
-            echo json_encode([
-                "status" => 500,
-                "success" => false,
-                "message" => "Internal Server Error"
-            ]);
+            return JsonResponse::createdResponse(["message" => "Product created successfully", "data" => $newProduct]);
+        } catch (Exception $e) {
+            return JsonResponse::internalServerError(["error" => $e->getMessage()]);
         }
     }
 
-    public static function updateProduct($id, $data, $imagePath = null)
+    public static function updateProduct(int $id, array $data): ResponseInterface
     {
         try {
-            if ($imagePath) {
-                $data['image'] = $imagePath;
-            }
-            $updateProduct = ProductService::updateProduct((int)$id, $data);
-
-            if (!$updateProduct) {
-                http_response_code(404);
-                echo json_encode(["status" => 404, "success" => false, "message" => "Product not found"]);
-                return;
+            if (!isset($data['image'])) {
+                unset($data['image']);
             }
 
-            http_response_code(200);
-            echo json_encode(["status" => 200, "success" => true, "data" => $updateProduct]);
-        } catch (\Exception $e) {
-            error_log("update product error " . $e->getMessage());
-            http_response_code(500);
-            echo json_encode([
-                "status" => 500,
-                "success" => false,
-                "message" => "Internal Server Error"
-            ]);
+            $updatedProduct = ProductService::updateProduct($id, $data);
+
+            if (!$updatedProduct) {
+                return JsonResponse::notFound(["message" => "Product not found"]);
+            }
+
+            return JsonResponse::okResponse(["data" => $updatedProduct]);
+        } catch (Exception $e) {
+            return JsonResponse::internalServerError(["error" => $e->getMessage()]);
         }
     }
 
-    public static function deleteProduct($id)
+
+
+    public static function deleteProduct(int $id): ResponseInterface
     {
         try {
             $deleted = ProductService::deleteProduct((int)$id);
             if (!$deleted) {
-                http_response_code(404);
-                echo json_encode(["status" => 404, "success" => false, "message" => "Product not found"]);
-                return;
+                return JsonResponse::notFound(["message" => "Product not found"]);
             }
-            http_response_code(200);
-            echo json_encode(["status" => 200, "success" => true, "message" => "Product deleted successfully"]);
-        } catch (\Exception $e) {
-            error_log("delete product error " . $e->getMessage());
-            http_response_code(500);
-            echo json_encode([
-                "status" => 500,
-                "success" => false,
-                "message" => "Internal Server Error"
-            ]);
+
+            return JsonResponse::okResponse(["message" => "Product deleted successfully"]);
+        } catch (Exception $e) {
+            return JsonResponse::internalServerError(["error" => $e->getMessage()]);
         }
     }
 }

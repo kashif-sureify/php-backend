@@ -10,9 +10,17 @@ use Dotenv\Dotenv;
 
 use App\config\ProductDB;
 use App\config\UserDB;
-use App\middlewares\AuthMiddleware;
-use App\utils\Cors;
-
+use App\middlewares\CorsMiddleware;
+use App\routes\AuthRoutes;
+use App\routes\ProductRoutes;
+use App\routes\UploadRoutes;
+use App\utils\JsonResponse;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7\Response;
+use Nyholm\Psr7Server\ServerRequestCreator;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
@@ -20,63 +28,62 @@ $dotenv->load();
 ProductDB::initProductTable();
 UserDB::initUserTable();
 
-Cors::handle();
+$psr17Factory = new Psr17Factory();
+$creator = new ServerRequestCreator($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
 
-$rawURL = $_SERVER["REQUEST_URI"];
-$reqURL = parse_url($rawURL, PHP_URL_PATH);
-$segments = explode("/", trim($reqURL, "/"));
-$reqMethod = $_SERVER["REQUEST_METHOD"];
+$request = $creator->fromGlobals();
 
+$corsMiddleware = new CorsMiddleware();
+$response = $corsMiddleware->process($request, new class implements RequestHandlerInterface {
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        return new Response();
+    }
+});
 
-$routes = [
-    'auth' => dirname(__DIR__) . '/app/routes/AuthRoutes.php',
-    'products' => dirname(__DIR__) . '/app/routes/ProductRoutes.php',
-    'upload' => dirname(__DIR__) . '/app/routes/UploadRoutes.php',
-];
-
-if (strpos($reqURL, '/api/uploads') === 0) {
-    $filename = basename($reqURL);
+$uri = $request->getUri()->getPath();
+if (str_starts_with($uri, '/api/uploads')) {
+    $filename = basename($uri);
     $filePath = dirname(__DIR__) . '/uploads/' . $filename;
     if (file_exists($filePath)) {
         header('Content-Type:' . mime_content_type($filePath));
         readfile($filePath);
-        exit;
     } else {
-        http_response_code(404);
-        echo json_encode(["status" => 404, "success" => false, "message" => "File not found"]);
-        exit;
+        JsonResponse::notFound(["message" => "File not found"]);
     }
+    exit;
 }
 
-if (isset($segments[0]) && $segments[0] === "api") {
+$segments = explode('/', trim($uri, '/'));
 
+if (isset($segments[0]) && $segments[0] === 'api') {
     if (isset($segments[1]) && $segments[1] === "v1" && isset($segments[2])) {
         $resource = $segments[2];
-        if ($resource === "auth" && isset($routes[$resource])) {
-            require_once $routes[$resource];
-            exit;
+
+        switch ($resource) {
+            case 'auth':
+                $response = AuthRoutes::handle($request);
+                break;
+            case 'products':
+                $response = ProductRoutes::handle($request, isset($segments[3]) ? (int)$segments[3] : null);
+                break;
+            case 'upload':
+                $response = UploadRoutes::handle($request);
+                break;
+
+            default:
+                $response = JsonResponse::notFound(["message" => "Route not found"]);
         }
-    }
-
-    if (isset($segments[1])) {
-        $resource = $segments[1];
-        $id = $segments[2] ?? null;
-        if (array_key_exists($resource, $routes)) {
-
-            if ($resource === "products") {
-                if (!AuthMiddleware::protectRoute()) {
-                    http_response_code(401);
-                    echo json_encode(["error" => "Unauthorized"]);
-                    exit;
-                }
+        http_response_code($response->getStatusCode());
+        foreach ($response->getHeaders() as $key => $value) {
+            foreach ($value as $value) {
+                header("$key: $value", false);
             }
-
-            require_once $routes[$resource];
-            exit;
         }
+        echo $response->getBody();
+        exit;
     }
 }
 
-http_response_code(404);
-echo json_encode(["message" => "Invalid Url"]);
+JsonResponse::notFound(["message" => "Invalid Url"]);
 exit;
