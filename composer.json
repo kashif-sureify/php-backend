@@ -11,7 +11,8 @@
     "vlucas/phpdotenv": "^5.5",
     "psr/http-server-middleware": "^1.0",
     "nyholm/psr7-server": "^1.1",
-    "http-interop/http-factory-guzzle": "^1.2"
+    "http-interop/http-factory-guzzle": "^1.2",
+    "psr/log": "^3.0"
   },
   "autoload": {
     "psr-4": {

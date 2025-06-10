@@ -6,13 +6,15 @@ use App\services\ProductService;
 use App\utils\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Exception;
+use Psr\Http\Message\ServerRequestInterface;
 
 class ProductController
 {
-    public static function getProducts(): ResponseInterface
+    public static function getProducts(ServerRequestInterface $request): ResponseInterface
     {
-        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-        $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 6;
+        $queryParams = $request->getQueryParams();
+        $page = isset($queryParams['page']) ? (int) $queryParams['page'] : 1;
+        $limit = isset($queryParams['limit']) ? (int) $queryParams['limit'] : 6;
         $offset = ($page - 1) * $limit;
 
         try {
@@ -32,8 +34,10 @@ class ProductController
         }
     }
 
-    public static function getProduct(int $id): ResponseInterface
+    public static function getProduct(ServerRequestInterface $request, int $id): ResponseInterface
     {
+        $clientIp = $request->getServerParams()['REMOTE_ADDR'] ?? 'unknown';
+
         try {
             $product = ProductService::getProductById($id);
             if (!$product) {
@@ -45,7 +49,7 @@ class ProductController
         }
     }
 
-    public static function createProduct(array $data): ResponseInterface
+    public static function createProduct(ServerRequestInterface $request, array $data): ResponseInterface
     {
 
         if (
@@ -66,7 +70,7 @@ class ProductController
         }
     }
 
-    public static function updateProduct(int $id, array $data): ResponseInterface
+    public static function updateProduct(ServerRequestInterface $request, int $id, array $data): ResponseInterface
     {
         try {
             if (!isset($data['image'])) {
@@ -87,7 +91,7 @@ class ProductController
 
 
 
-    public static function deleteProduct(int $id): ResponseInterface
+    public static function deleteProduct(ServerRequestInterface $request, int $id): ResponseInterface
     {
         try {
             $deleted = ProductService::deleteProduct((int)$id);

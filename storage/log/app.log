@@ -1,0 +1,23 @@
+[2025-06-10 09:52:54] [info] User logged in successfully
+[2025-06-10 10:10:14] [info] User logged in successfully
+[2025-06-10 15:43:55] [info] User logged in successfully
+[2025-06-10 15:44:57] [info] Auth check passed
+[2025-06-10 15:45:10] [info] User logged out successfully
+[2025-06-10 15:55:17] [info] User logged in successfully: unknown
+[2025-06-10 15:55:39] [info] Auth check passed, user : unknown
+[2025-06-10 15:56:58] [info] User logged in successfully: 4
+[2025-06-10 15:58:44] [info] User logged in successfully: php@test.com
+[2025-06-10 15:58:59] [info] Auth check passed, user : php@test.com
+[2025-06-10 15:59:12] [info] User logged out successfully
+[2025-06-10 16:01:09] [info] Invalid Credentials for this php@test.com
+[2025-06-10 16:09:12] [info] Invalid Credentials for this user: php@test.com
+[2025-06-10 16:09:18] [info] User logged in successfully: php@test.com
+[2025-06-10 16:10:09] [info] User logged out successfully
+[2025-06-10 16:10:15] [notice] User logged in successfully: php@test.com
+[2025-06-10 16:10:20] [info] Auth check passed, user : php@test.com
+[2025-06-10 16:10:41] [info] User logged out successfully
+[2025-06-10 16:10:48] [info] Invalid Credentials for this user: php@test.com
+[2025-06-10 17:02:35] [notice] User logged in successfully: php@test.com
+[2025-06-10 17:22:07] [notice] User logged in successfully: kashifjsr7@gmail.com
+[2025-06-10 17:22:10] [info] Auth check passed, user : kashifjsr7@gmail.com
+[2025-06-10 17:22:10] [info] Auth check passed, user : kashifjsr7@gmail.com

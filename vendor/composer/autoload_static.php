@@ -23,6 +23,7 @@ class ComposerStaticInitaa80464f60257f525fdcc31df4ff689d
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'Psr\\Http\\Server\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
@@ -74,6 +75,10 @@ class ComposerStaticInitaa80464f60257f525fdcc31df4ff689d
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/src',
         ),
         'Psr\\Http\\Server\\' => 
         array (
@@ -147,10 +152,16 @@ class ComposerStaticInitaa80464f60257f525fdcc31df4ff689d
         'App\\controllers\\ProductController' => __DIR__ . '/../..' . '/app/controllers/ProductController.php',
         'App\\controllers\\UploadController' => __DIR__ . '/../..' . '/app/controllers/UploadController.php',
         'App\\middlewares\\AuthMiddleware' => __DIR__ . '/../..' . '/app/middlewares/AuthMiddleware.php',
+        'App\\middlewares\\CorsMiddleware' => __DIR__ . '/../..' . '/app/middlewares/CorsMiddleware.php',
         'App\\middlewares\\UploadMiddleware' => __DIR__ . '/../..' . '/app/middlewares/UploadMiddleware.php',
+        'App\\routes\\AuthRoutes' => __DIR__ . '/../..' . '/app/routes/AuthRoutes.php',
+        'App\\routes\\ProductRoutes' => __DIR__ . '/../..' . '/app/routes/ProductRoutes.php',
+        'App\\routes\\UploadRoutes' => __DIR__ . '/../..' . '/app/routes/UploadRoutes.php',
         'App\\services\\AuthService' => __DIR__ . '/../..' . '/app/services/AuthService.php',
         'App\\services\\ProductService' => __DIR__ . '/../..' . '/app/services/ProductService.php',
-        'App\\utils\\Cors' => __DIR__ . '/../..' . '/app/utils/Cors.php',
+        'App\\utils\\Cookie' => __DIR__ . '/../..' . '/app/utils/Cookie.php',
+        'App\\utils\\JsonResponse' => __DIR__ . '/../..' . '/app/utils/JsonResponse.php',
+        'App\\utils\\ProductRequestHandle' => __DIR__ . '/../..' . '/app/utils/ProductRequestHandle.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Dotenv\\Dotenv' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Dotenv.php',
@@ -304,6 +315,14 @@ class ComposerStaticInitaa80464f60257f525fdcc31df4ff689d
         'Psr\\Http\\Message\\UriInterface' => __DIR__ . '/..' . '/psr/http-message/src/UriInterface.php',
         'Psr\\Http\\Server\\MiddlewareInterface' => __DIR__ . '/..' . '/psr/http-server-middleware/src/MiddlewareInterface.php',
         'Psr\\Http\\Server\\RequestHandlerInterface' => __DIR__ . '/..' . '/psr/http-server-handler/src/RequestHandlerInterface.php',
+        'Psr\\Log\\AbstractLogger' => __DIR__ . '/..' . '/psr/log/src/AbstractLogger.php',
+        'Psr\\Log\\InvalidArgumentException' => __DIR__ . '/..' . '/psr/log/src/InvalidArgumentException.php',
+        'Psr\\Log\\LogLevel' => __DIR__ . '/..' . '/psr/log/src/LogLevel.php',
+        'Psr\\Log\\LoggerAwareInterface' => __DIR__ . '/..' . '/psr/log/src/LoggerAwareInterface.php',
+        'Psr\\Log\\LoggerAwareTrait' => __DIR__ . '/..' . '/psr/log/src/LoggerAwareTrait.php',
+        'Psr\\Log\\LoggerInterface' => __DIR__ . '/..' . '/psr/log/src/LoggerInterface.php',
+        'Psr\\Log\\LoggerTrait' => __DIR__ . '/..' . '/psr/log/src/LoggerTrait.php',
+        'Psr\\Log\\NullLogger' => __DIR__ . '/..' . '/psr/log/src/NullLogger.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'Symfony\\Polyfill\\Ctype\\Ctype' => __DIR__ . '/..' . '/symfony/polyfill-ctype/Ctype.php',
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',

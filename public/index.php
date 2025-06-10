@@ -37,7 +37,7 @@ $corsMiddleware = new CorsMiddleware();
 $response = $corsMiddleware->process($request, new class implements RequestHandlerInterface {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new Response();
+        return new Response(200);
     }
 });
 

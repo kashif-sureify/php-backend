@@ -12,6 +12,8 @@ RUN a2enmod rewrite
 # Copy Apache config to serve from /var/www/html/public
 COPY ./docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
+RUN apt-get update && apt-get install -y postgresql-client
+
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
