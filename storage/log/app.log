@@ -1,23 +1,40 @@
-[2025-06-10 09:52:54] [info] User logged in successfully
-[2025-06-10 10:10:14] [info] User logged in successfully
-[2025-06-10 15:43:55] [info] User logged in successfully
-[2025-06-10 15:44:57] [info] Auth check passed
-[2025-06-10 15:45:10] [info] User logged out successfully
-[2025-06-10 15:55:17] [info] User logged in successfully: unknown
-[2025-06-10 15:55:39] [info] Auth check passed, user : unknown
-[2025-06-10 15:56:58] [info] User logged in successfully: 4
-[2025-06-10 15:58:44] [info] User logged in successfully: php@test.com
-[2025-06-10 15:58:59] [info] Auth check passed, user : php@test.com
-[2025-06-10 15:59:12] [info] User logged out successfully
-[2025-06-10 16:01:09] [info] Invalid Credentials for this php@test.com
-[2025-06-10 16:09:12] [info] Invalid Credentials for this user: php@test.com
-[2025-06-10 16:09:18] [info] User logged in successfully: php@test.com
-[2025-06-10 16:10:09] [info] User logged out successfully
-[2025-06-10 16:10:15] [notice] User logged in successfully: php@test.com
-[2025-06-10 16:10:20] [info] Auth check passed, user : php@test.com
-[2025-06-10 16:10:41] [info] User logged out successfully
-[2025-06-10 16:10:48] [info] Invalid Credentials for this user: php@test.com
-[2025-06-10 17:02:35] [notice] User logged in successfully: php@test.com
-[2025-06-10 17:22:07] [notice] User logged in successfully: kashifjsr7@gmail.com
-[2025-06-10 17:22:10] [info] Auth check passed, user : kashifjsr7@gmail.com
-[2025-06-10 17:22:10] [info] Auth check passed, user : kashifjsr7@gmail.com
+[2025-06-11 13:37:42] [info] totalProducts:13 totalPages:1 page:1 limit:100
+[2025-06-11 13:44:13] [notice] User logged in successfully: kashifjsr7@gmail.com
+[2025-06-11 13:44:13] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:44:13] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:44:16] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"\/uploads\/1749629094-iphone16e.avif"}, ClientIP: 172.19.0.1
+[2025-06-11 13:44:16] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"\/uploads\/1749629094-iphone16e.avif"}, ClientIP: 172.19.0.1
+[2025-06-11 13:44:27] [info] Product updated: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749629665-pexels-jessbaileydesign-788946.jpg"}
+[2025-06-11 13:44:27] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:44:27] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:46:38] [info] Auth check passed, user : kashifjsr7@gmail.com
+[2025-06-11 13:46:38] [info] Auth check passed, user : kashifjsr7@gmail.com
+[2025-06-11 13:46:39] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:46:39] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:46:44] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749629665-pexels-jessbaileydesign-788946.jpg"}, ClientIP: 172.19.0.1
+[2025-06-11 13:46:44] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749629665-pexels-jessbaileydesign-788946.jpg"}, ClientIP: 172.19.0.1
+[2025-06-11 13:47:05] [info] Auth check passed, user : kashifjsr7@gmail.com
+[2025-06-11 13:47:05] [info] Auth check passed, user : kashifjsr7@gmail.com
+[2025-06-11 13:47:05] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749629665-pexels-jessbaileydesign-788946.jpg"}, ClientIP: 172.19.0.1
+[2025-06-11 13:47:05] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749629665-pexels-jessbaileydesign-788946.jpg"}, ClientIP: 172.19.0.1
+[2025-06-11 13:50:13] [info] Product updated: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749630012-IMG20230513213150.jpg"}
+[2025-06-11 13:50:13] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:50:13] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:50:15] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749630012-IMG20230513213150.jpg"}, ClientIP: 172.19.0.1
+[2025-06-11 13:50:15] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749630012-IMG20230513213150.jpg"}, ClientIP: 172.19.0.1
+[2025-06-11 13:50:22] [info] Product updated: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749630021-pexels-jessbaileydesign-788946.jpg"}
+[2025-06-11 13:50:22] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:50:22] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:50:57] [info] Auth check passed, user : kashifjsr7@gmail.com
+[2025-06-11 13:50:57] [info] Auth check passed, user : kashifjsr7@gmail.com
+[2025-06-11 13:50:57] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 13:50:57] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 14:41:44] [notice] User logged in successfully: kashifjsr7@gmail.com
+[2025-06-11 14:41:44] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 14:41:44] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 14:41:46] [info] Auth check passed, user : kashifjsr7@gmail.com
+[2025-06-11 14:41:46] [info] Auth check passed, user : kashifjsr7@gmail.com
+[2025-06-11 14:41:46] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 14:41:46] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-11 14:41:54] [info] User logged out successfully
+[2025-06-11 14:42:41] [info] Invalid Credentials for this user: kashifjsr7@gmail.com
