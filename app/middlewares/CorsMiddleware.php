@@ -28,10 +28,23 @@ class CorsMiddleware implements MiddlewareInterface
             $response = $response->withHeader('Content-Type', 'application/json');
 
             if ($origin === $clientOrigin) {
-                $response = $response->withHeader('Access-Control-Allow-Origin', $origin)
-                    ->withHeader('Access-Control-Allow-Credentials', 'true')
-                    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-                    ->withHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Requested-With');
+                $response = $response->withHeader(
+                    'Access-Control-Allow-Origin',
+                    $origin
+                )
+                    ->withHeader(
+                        'Access-Control-Allow-Credentials',
+                        'true'
+                    )
+                    ->withHeader(
+                        'Access-Control-Allow-Methods',
+                        'GET, POST, PUT, DELETE, OPTIONS'
+                    )
+                    ->withHeader(
+                        'Access-Control-Allow-Headers',
+                        'Origin, Content-Type, Accept, Authorization,
+                     X-Requested-With'
+                    );
             }
             return $response;
         } catch (Exception $e) {

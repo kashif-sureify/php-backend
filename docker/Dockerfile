@@ -27,4 +27,15 @@ RUN chown -R www-data:www-data /var/www/html/uploads
 
 RUN composer require psr/http-server-middleware
 
+# Copy local php.ini into container's PHP config directory
+COPY docker/php.ini /usr/local/etc/php/conf.d/custom.ini
+
+# Install Composer and PHP_CodeSniffer globally
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN composer global require "squizlabs/php_codesniffer=*"
+ENV PATH="$PATH:/root/.composer/vendor/bin"
+
+
+
 EXPOSE 80

@@ -25,7 +25,7 @@ class AuthRoutes
         if ($method === "GET" && $path == "/api/v1/auth/authCheck") {
             $middleware = new AuthMiddleware();
 
-            $handler = new class($authController) implements RequestHandlerInterface {
+            $handler = new class ($authController) implements RequestHandlerInterface {
                 private AuthController $controller;
 
                 public function __construct(AuthController $controller)

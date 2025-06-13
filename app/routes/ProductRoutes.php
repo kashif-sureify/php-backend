@@ -17,7 +17,7 @@ class ProductRoutes
     {
         $authMiddleware = new AuthMiddleware();
 
-        $handler = new class($request, $id) implements RequestHandlerInterface {
+        $handler = new class ($request, $id) implements RequestHandlerInterface {
             private ServerRequestInterface $request;
             private ?int $id;
             private FileLogger $logger;
@@ -34,12 +34,16 @@ class ProductRoutes
                 $method = $request->getMethod();
                 $contentType = $request->getHeaderLine('Content-Type');
 
-                $data = (str_contains($contentType, 'application/json') ? json_decode((string) $request->getBody(), true) ?? [] : $request->getParsedBody() ?? []);
+                $data = (str_contains($contentType, 'application/json') ?
+                    json_decode((string) $request->getBody(), true) ?? []
+                    : $request->getParsedBody() ?? []);
 
                 $productController = new ProductController($this->logger);
 
                 return match ($method) {
-                    'GET' => $this->id ? $productController->getProduct($request, $this->id) : $productController->getProducts($request),
+                    'GET' => $this->id ?
+                        $productController->getProduct($request, $this->id)
+                        : $productController->getProducts($request),
                     'POST' => ProductRequestHandle::handlePost($request, $data, $this->logger),
                     'PATCH' => ProductRequestHandle::handlePatch($request, $this->id, $data, $this->logger),
                     'DELETE' => $productController->deleteProduct($request, $this->id),

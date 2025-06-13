@@ -2,27 +2,115 @@
 [2025-06-11 13:44:13] [notice] User logged in successfully: kashifjsr7@gmail.com
 [2025-06-11 13:44:13] [info] totalProducts:13 totalPages:3 page:1 limit:6
 [2025-06-11 13:44:13] [info] totalProducts:13 totalPages:3 page:1 limit:6
-[2025-06-11 13:44:16] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"\/uploads\/1749629094-iphone16e.avif"}, ClientIP: 172.19.0.1
-[2025-06-11 13:44:16] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"\/uploads\/1749629094-iphone16e.avif"}, ClientIP: 172.19.0.1
-[2025-06-11 13:44:27] [info] Product updated: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749629665-pexels-jessbaileydesign-788946.jpg"}
+[2025-06-11 13:44:16] [info] Product: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "/uploads/1749629094-iphone16e.avif"
+}, ClientIP: 172.19.0.1
+[2025-06-11 13:44:16] [info] Product: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "/uploads/1749629094-iphone16e.avif"
+}, ClientIP: 172.19.0.1
+[2025-06-11 13:44:27] [info] Product updated: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "1749629665-pexels-jessbaileydesign-788946.jpg"
+}
 [2025-06-11 13:44:27] [info] totalProducts:13 totalPages:3 page:1 limit:6
 [2025-06-11 13:44:27] [info] totalProducts:13 totalPages:3 page:1 limit:6
 [2025-06-11 13:46:38] [info] Auth check passed, user : kashifjsr7@gmail.com
 [2025-06-11 13:46:38] [info] Auth check passed, user : kashifjsr7@gmail.com
 [2025-06-11 13:46:39] [info] totalProducts:13 totalPages:3 page:1 limit:6
 [2025-06-11 13:46:39] [info] totalProducts:13 totalPages:3 page:1 limit:6
-[2025-06-11 13:46:44] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749629665-pexels-jessbaileydesign-788946.jpg"}, ClientIP: 172.19.0.1
-[2025-06-11 13:46:44] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749629665-pexels-jessbaileydesign-788946.jpg"}, ClientIP: 172.19.0.1
+[2025-06-11 13:46:44] [info] Product: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "1749629665-pexels-jessbaileydesign-788946.jpg"
+}, ClientIP: 172.19.0.1
+[2025-06-11 13:46:44] [info] Product: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "1749629665-pexels-jessbaileydesign-788946.jpg"
+}, ClientIP: 172.19.0.1
 [2025-06-11 13:47:05] [info] Auth check passed, user : kashifjsr7@gmail.com
 [2025-06-11 13:47:05] [info] Auth check passed, user : kashifjsr7@gmail.com
-[2025-06-11 13:47:05] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749629665-pexels-jessbaileydesign-788946.jpg"}, ClientIP: 172.19.0.1
-[2025-06-11 13:47:05] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749629665-pexels-jessbaileydesign-788946.jpg"}, ClientIP: 172.19.0.1
-[2025-06-11 13:50:13] [info] Product updated: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749630012-IMG20230513213150.jpg"}
+[2025-06-11 13:47:05] [info] Product: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "1749629665-pexels-jessbaileydesign-788946.jpg"
+}, ClientIP: 172.19.0.1
+[2025-06-11 13:47:05] [info] Product: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "1749629665-pexels-jessbaileydesign-788946.jpg"
+}, ClientIP: 172.19.0.1
+[2025-06-11 13:50:13] [info] Product updated: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "1749630012-IMG20230513213150.jpg"
+}
 [2025-06-11 13:50:13] [info] totalProducts:13 totalPages:3 page:1 limit:6
 [2025-06-11 13:50:13] [info] totalProducts:13 totalPages:3 page:1 limit:6
-[2025-06-11 13:50:15] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749630012-IMG20230513213150.jpg"}, ClientIP: 172.19.0.1
-[2025-06-11 13:50:15] [info] Product: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749630012-IMG20230513213150.jpg"}, ClientIP: 172.19.0.1
-[2025-06-11 13:50:22] [info] Product updated: {"id":53,"name":"Test Product","description":"This is a test","price":"999.99","stock":16,"image":"1749630021-pexels-jessbaileydesign-788946.jpg"}
+[2025-06-11 13:50:15] [info] Product: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "1749630012-IMG20230513213150.jpg"
+}, ClientIP: 172.19.0.1
+[2025-06-11 13:50:15] [info] Product: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "1749630012-IMG20230513213150.jpg"
+}, ClientIP: 172.19.0.1
+[2025-06-11 13:50:22] [info] Product updated: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "1749630021-pexels-jessbaileydesign-788946.jpg"
+}
 [2025-06-11 13:50:22] [info] totalProducts:13 totalPages:3 page:1 limit:6
 [2025-06-11 13:50:22] [info] totalProducts:13 totalPages:3 page:1 limit:6
 [2025-06-11 13:50:57] [info] Auth check passed, user : kashifjsr7@gmail.com
@@ -42,3 +130,31 @@
 [2025-06-13 12:43:33] [info] totalProducts:13 totalPages:1 page:1 limit:100
 [2025-06-13 12:44:00] [info] Product deleted with Id: 53
 [2025-06-13 12:44:33] [info] totalProducts:13 totalPages:1 page:1 limit:100
+[2025-06-13 12:47:36] [info] Product: 
+{
+    "id": 53,
+    "name": "Test Product",
+    "description": "This is a test",
+    "price": "999.99",
+    "stock": 16,
+    "image": "1749630021-pexels-jessbaileydesign-788946.jpg"
+}, ClientIP: 172.19.0.1
+[2025-06-13 12:54:22] [info] totalProducts:13 totalPages:1 page:1 limit:100
+[2025-06-13 15:38:58] [notice] User logged in successfully: php@test.com
+[2025-06-13 15:39:02] [info] totalProducts:13 totalPages:1 page:1 limit:100
+[2025-06-13 15:39:10] [info] Product deleted with Id: 52
+[2025-06-13 15:40:41] [notice] User logged in successfully: kashifjsr7@gmail.com
+[2025-06-13 15:40:41] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-13 15:40:41] [info] totalProducts:13 totalPages:3 page:1 limit:6
+[2025-06-13 15:41:19] [notice] New product added: 
+{
+    "id": 54,
+    "name": "iPhone 16",
+    "description": "Samsung Ultra model",
+    "price": "123.00",
+    "stock": 1,
+    "image": "1749809476-pexels-jessbaileydesign-788946.jpg"
+}
+[2025-06-13 15:41:19] [info] totalProducts:14 totalPages:3 page:1 limit:6
+[2025-06-13 15:41:26] [info] Product deleted with Id: 54
+[2025-06-13 15:41:26] [info] totalProducts:14 totalPages:3 page:1 limit:6

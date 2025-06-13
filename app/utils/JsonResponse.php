@@ -9,7 +9,11 @@ final class JsonResponse
 {
     public static function sendJsonResponse(int $status, array $body): ResponseInterface
     {
-        return new Response($status, ['Content-Type' => 'application/json'], json_encode($body, JSON_UNESCAPED_UNICODE));
+        return new Response(
+            $status,
+            ['Content-Type' => 'application/json'],
+            json_encode($body, JSON_UNESCAPED_UNICODE)
+        );
     }
 
     public static function okResponse(?array $error = null): ResponseInterface

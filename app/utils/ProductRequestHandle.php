@@ -11,10 +11,13 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class ProductRequestHandle
 {
-    public static function handlePost(ServerRequestInterface $request, array $data, FileLogger $logger): ResponseInterface
-    {
+    public static function handlePost(
+        ServerRequestInterface $request,
+        array $data,
+        FileLogger $logger
+    ): ResponseInterface {
         $uploadMiddleware = new UploadMiddleware('image', false);
-        $uploadHandler = new class($data, $logger) implements RequestHandlerInterface {
+        $uploadHandler = new class ($data, $logger) implements RequestHandlerInterface {
             private array $data;
             private FileLogger $logger;
 
@@ -39,10 +42,14 @@ class ProductRequestHandle
         return $uploadMiddleware->process($request, $uploadHandler);
     }
 
-    public static function handlePatch(ServerRequestInterface $request, int $id, array $data, FileLogger $logger): ResponseInterface
-    {
+    public static function handlePatch(
+        ServerRequestInterface $request,
+        int $id,
+        array $data,
+        FileLogger $logger
+    ): ResponseInterface {
         $uploadMiddleware = new UploadMiddleware('image', false);
-        $uploadHandler = new class($id, $data, $logger) implements RequestHandlerInterface {
+        $uploadHandler = new class ($id, $data, $logger) implements RequestHandlerInterface {
             private int $id;
             private array $data;
             private FileLogger $logger;

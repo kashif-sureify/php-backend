@@ -2,7 +2,6 @@
 
 namespace App\utils;
 
-
 class Cookie
 {
     public static function generateCookie(string $token, int $expires): string

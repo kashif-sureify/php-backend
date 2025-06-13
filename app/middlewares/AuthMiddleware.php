@@ -9,7 +9,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Exception;
-
 use App\utils\JsonResponse;
 
 class AuthMiddleware implements MiddlewareInterface

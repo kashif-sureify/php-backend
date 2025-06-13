@@ -25,8 +25,18 @@ class AuthService
             $stmt->execute([':email' => $email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (!$user) return null;
-            $token = JWT::encode(['id' => $user['id'], 'email' => $user['email'], 'exp' => time() + 3600], getenv('JWT_SECRET'), 'HS256');
+            if (!$user) {
+                null;
+            }
+            $token = JWT::encode(
+                [
+                    'id' => $user['id'],
+                    'email' => $user['email'],
+                    'exp' => time() + 3600
+                ],
+                getenv('JWT_SECRET'),
+                'HS256'
+            );
 
             return ['token' => $token, 'user' => $user];
         } catch (PDOException $e) {
@@ -51,7 +61,15 @@ class AuthService
 
             unset($user['password']);
 
-            $token = JWT::encode(['id' => $user['id'], 'email' => $user['email'], 'exp' => time() + 3600], getenv('JWT_SECRET'), 'HS256');
+            $token = JWT::encode(
+                [
+                    'id' => $user['id'],
+                    'email' => $user['email'],
+                    'exp' => time() + 3600
+                ],
+                getenv('JWT_SECRET'),
+                'HS256'
+            );
 
             return ['token' => $token, 'user' => $user];
         } catch (PDOException $e) {

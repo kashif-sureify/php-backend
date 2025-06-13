@@ -59,7 +59,10 @@ class ProductController
                 $this->logger->warning("Product with {id} ID not found", ["id" => $id]);
                 return JsonResponse::notFound(["message" => "Product not found"]);
             }
-            $this->logger->info("Product: {data}, ClientIP: {IP}", ["data" => json_encode($product), "IP" => $clientIp]);
+            $this->logger->info(
+                "Product: {data}, ClientIP: {IP}",
+                ["data" => json_encode($product), "IP" => $clientIp]
+            );
             return JsonResponse::okResponse(["data" => $product]);
         } catch (Exception $e) {
             $this->logger->error("Get a product exception: {exception}", ["exception" => $e]);

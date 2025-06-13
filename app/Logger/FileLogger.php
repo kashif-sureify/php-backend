@@ -57,7 +57,16 @@ class FileLogger implements LoggerInterface
 
     public function log($level, $message, array $context = []): void
     {
-        $validLevels = [LogLevel::EMERGENCY, LogLevel::ALERT, LogLevel::CRITICAL, LogLevel::ERROR, LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG];
+        $validLevels = [
+            LogLevel::EMERGENCY,
+            LogLevel::ALERT,
+            LogLevel::CRITICAL,
+            LogLevel::ERROR,
+            LogLevel::WARNING,
+            LogLevel::NOTICE,
+            LogLevel::INFO,
+            LogLevel::DEBUG
+        ];
 
         if (!in_array($level, $validLevels, true)) {
             throw new InvalidArgumentException("Invalid log level: $level");

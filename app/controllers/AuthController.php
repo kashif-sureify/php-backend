@@ -9,7 +9,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use Exception;
 
-
 class AuthController
 {
     private LoggerInterface $logger;
@@ -19,7 +18,11 @@ class AuthController
     }
     public function signup(array $data): ResponseInterface
     {
-        if (!isset($data['username']) || trim($data['username']) === '' || !isset($data['email']) || trim($data['email']) === '' || !isset($data['password']) || trim($data['password']) === '') {
+        if (
+            !isset($data['username']) || trim($data['username']) === '' ||
+            !isset($data['email']) || trim($data['email']) === '' ||
+            !isset($data['password']) || trim($data['password']) === ''
+        ) {
             $this->logger->warning("Signup Validation failed for {data}", ["data" => $data]);
             return JsonResponse::badRequest();
         }
@@ -27,13 +30,22 @@ class AuthController
         try {
             $result = AuthService::signup($data['username'], $data['email'], $data['password']);
             if (!$result) {
-                $this->logger->info("Invalid Credentials for this {email}", ["email" => $data['email']]);
+                $this->logger->info(
+                    "Invalid Credentials for this {email}",
+                    ["email" => $data['email']]
+                );
                 return JsonResponse::unauthorized(["message" => "Signup failed"]);
             }
 
-            $this->logger->notice("User signed up successfully: {user}", ["user" => $result['user']['email'] ?? "unknown"]);
+            $this->logger->notice(
+                "User signed up successfully: {user}",
+                ["user" => $result['user']['email'] ?? "unknown"]
+            );
             $response = JsonResponse::createdResponse(["user" => $result['user']]);
-            return $response->withAddedHeader('Set-Cookie', Cookie::generateCookie($result['token'], 3600));
+            return $response->withAddedHeader(
+                'Set-Cookie',
+                Cookie::generateCookie($result['token'], 3600)
+            );
         } catch (Exception $e) {
             $this->logger->error("Signup exception: {exception}", ["exception" => $e]);
             return JsonResponse::internalServerError(["error" => $e->getMessage()]);
@@ -41,7 +53,10 @@ class AuthController
     }
     public function login(array $data): ResponseInterface
     {
-        if (!isset($data['email']) || trim($data['email']) === '' || !isset($data['password']) || trim($data['password']) === '') {
+        if (
+            !isset($data['email']) || trim($data['email']) === '' ||
+            !isset($data['password']) || trim($data['password']) === ''
+        ) {
             $this->logger->warning("Login Validation failed for {data}", ["data" => $data]);
             return JsonResponse::badRequest();
         }
@@ -53,7 +68,10 @@ class AuthController
                 return JsonResponse::unauthorized(["message" => "Invalid credentials"]);
             }
 
-            $this->logger->notice("User logged in successfully: {user}", ["user" => $result['user']['email'] ?? "unknown"]);
+            $this->logger->notice(
+                "User logged in successfully: {user}",
+                ["user" => $result['user']['email'] ?? "unknown"]
+            );
             $response = JsonResponse::okResponse(["user" => $result['user']]);
             return $response->withAddedHeader('Set-Cookie', Cookie::generateCookie($result['token'], 3600));
         } catch (Exception $e) {

@@ -6,10 +6,8 @@ use App\config\Database;
 use PDOException;
 use Exception;
 
-
 class ProductDB
 {
-
     public static function initProductTable(): void
     {
         $productTableSQL = "
@@ -21,7 +19,7 @@ class ProductDB
         stock INT NOT NULL,
         image VARCHAR(255),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        deleted_at TIMESTAMP --
+        deleted_at TIMESTAMP
     );
 ";
 
