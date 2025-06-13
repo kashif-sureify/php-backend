@@ -12,7 +12,12 @@ class ProductService
     {
         try {
             $pdo = Database::getConnection();
-            $sql = "SELECT id, name, description, price, stock, image FROM products ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+            $sql = "
+            SELECT id, name, description, price, stock, image
+            FROM products
+            WHERE deleted_at IS NULL
+            ORDER BY created_at DESC
+            LIMIT :limit OFFSET :offset";
             $stmt = $pdo->prepare($sql);
             $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
             $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
@@ -112,9 +117,9 @@ class ProductService
     {
         try {
             $pdo = Database::getConnection();
-            $sql = "DELETE FROM products WHERE id=:id";
+            $sql = "UPDATE products SET deleted_at = NOW() WHERE id = :id AND deleted_at IS NULL";
             $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(':id', (int)$id, \PDO::PARAM_INT);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->rowCount() > 0;
         } catch (Throwable $th) {

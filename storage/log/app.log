@@ -38,3 +38,7 @@
 [2025-06-11 14:41:46] [info] totalProducts:13 totalPages:3 page:1 limit:6
 [2025-06-11 14:41:54] [info] User logged out successfully
 [2025-06-11 14:42:41] [info] Invalid Credentials for this user: kashifjsr7@gmail.com
+[2025-06-13 12:43:26] [notice] User logged in successfully: php@test.com
+[2025-06-13 12:43:33] [info] totalProducts:13 totalPages:1 page:1 limit:100
+[2025-06-13 12:44:00] [info] Product deleted with Id: 53
+[2025-06-13 12:44:33] [info] totalProducts:13 totalPages:1 page:1 limit:100

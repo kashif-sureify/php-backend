@@ -20,7 +20,8 @@ class ProductDB
         price DECIMAL(10,2) NOT NULL,
         stock INT NOT NULL,
         image VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        deleted_at TIMESTAMP --
     );
 ";
 
